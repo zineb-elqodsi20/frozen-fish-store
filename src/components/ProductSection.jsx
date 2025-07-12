@@ -1,6 +1,6 @@
 import { FiShoppingCart, FiHeart, FiEye } from 'react-icons/fi';
 
-const ProductCards = () => {
+const ProductCards = ({ addToCart, addToWishlist }) => {
   const products = [
     {
       id: 1,
@@ -64,7 +64,7 @@ const ProductCards = () => {
               
               {/* Wishlist and Quick View */}
               <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                <button className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50">
+                <button className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50" onClick={addToWishlist}>
                   <FiHeart className="text-gray-600 hover:text-red-500" />
                 </button>
                 <button className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50">
@@ -91,10 +91,22 @@ const ProductCards = () => {
                 </div>
                 
                 {/* Add to Basket Button */}
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md flex items-center justify-center transition-colors duration-300 font-medium">
-                  <FiShoppingCart className="mr-2" />
-                  ADD TO BASKET
-                </button>
+                <div className="flex items-center w-full mt-4 select-none">
+                  {/* Left ribbon tail */}
+                  <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="18,0 0,24 18,48" fill="#0071CE" />
+                  </svg>
+                  <div className="flex-1 h-12 bg-[#0071CE] flex items-center justify-between transition-colors duration-300 font-semibold uppercase text-sm px-6 shadow-lg" style={{ minHeight: '48px' }}>
+                    <span className="text-white tracking-wide">ADD TO BASKET</span>
+                    <button onClick={addToCart} className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-[#0071CE] ml-2 focus:outline-none">
+                      <FiShoppingCart className="text-[#0071CE] text-xl" strokeWidth={2} />
+                    </button>
+                  </div>
+                  {/* Right ribbon tail */}
+                  <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="0,0 18,24 0,48" fill="#0071CE" />
+                  </svg>
+                </div>
               </div>
             </div>
           ))}
