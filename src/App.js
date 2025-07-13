@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import Chatbot from './components/Chatbot';
 import MarcineFishNavbar from './components/navbar';
 import ImageSlider from "./components/ImageSlider";
 import ProductCards from './components/ProductSection';
@@ -166,6 +166,7 @@ function App() {
           </div>
         )}
       </div>
+      <Chatbot />
     </Router>
   );
 }
