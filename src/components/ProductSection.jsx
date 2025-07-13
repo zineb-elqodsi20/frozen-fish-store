@@ -1,8 +1,10 @@
-import { FiShoppingCart, FiHeart, FiEye } from 'react-icons/fi';
+import { FiShoppingCart, FiHeart, FiEye, FiX } from 'react-icons/fi';
 import { useState } from 'react';
 
 const ProductCards = ({ addToCart, addToWishlist }) => {
   const [likedProducts, setLikedProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   const toggleLike = (productId) => {
     if (likedProducts.includes(productId)) {
@@ -15,6 +17,16 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
     }
   };
 
+  const openDetailsModal = (product) => {
+    setSelectedProduct(product);
+    setShowDetailsModal(true);
+  };
+
+  const closeDetailsModal = () => {
+    setShowDetailsModal(false);
+    setSelectedProduct(null);
+  };
+
   const products = [
     {
       id: 1,
@@ -22,6 +34,13 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
       salePrice: "£75.00",
       originalPrice: "£88.88",
       tag: "Sale",
+      description: "Premium quality cook up pack with the finest ingredients for gourmet cooking. Includes rare spices and herbs.",
+      details: [
+        "Includes 10 different premium ingredients",
+        "Enough for 5 full meals",
+        "Vacuum sealed for freshness",
+        "Sourced from sustainable farms"
+      ]
     },
     {
       id: 2,
@@ -29,6 +48,13 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
       salePrice: "£12.71",
       originalPrice: "£14.95",
       tag: "Sale",
+      description: "Wild-caught seabass fillets, perfectly portioned and skin-on for optimal flavor.",
+      details: [
+        "Wild-caught from Atlantic waters",
+        "Skin-on for better cooking",
+        "Individually vacuum packed",
+        "Perfect for grilling or baking"
+      ]
     },
     {
       id: 3,
@@ -36,6 +62,13 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
       salePrice: "£28.80",
       originalPrice: "£32.00",
       tag: "Sale",
+      description: "Premium cold-water lobster tails, known for their sweet and tender meat.",
+      details: [
+        "230-280g per tail",
+        "Cold-water variety",
+        "Flash frozen at peak freshness",
+        "Easy to prepare"
+      ]
     },
     {
       id: 4,
@@ -43,11 +76,18 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
       salePrice: "£10.95",
       originalPrice: "£12.00",
       tag: "Sale",
+      description: "Large, high-quality anchovies perfect for pizzas, salads and gourmet recipes.",
+      details: [
+        "1kg bulk pack",
+        "Sustainably sourced",
+        "Packed in olive oil",
+        "Rich in omega-3"
+      ]
     }
   ];
 
   return (
-    <div className="bg-white py-12">
+    <div className="bg-white py-12 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <p className="text-gray-600 italic mb-2">Products of high quality</p>
@@ -77,7 +117,10 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
                       className={`${isLiked ? 'text-red-500 fill-current' : 'text-gray-600'} hover:text-red-500`} 
                     />
                   </button>
-                  <button className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50">
+                  <button 
+                    className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50"
+                    onClick={() => openDetailsModal(product)}
+                  >
                     <FiEye className="text-gray-600 hover:text-blue-600" />
                   </button>
                 </div>
@@ -88,7 +131,7 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
                 
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-1">{product.title}</h3>
-                  <p className="text-sm text-gray-500 mb-1">Special Offre</p>
+                  <p className="text-sm text-gray-500 mb-1">Special Offer</p>
                   <div className="mb-3">
                     <span className="text-red-600 font-bold text-xl">{product.salePrice}</span>
                     <span className="text-gray-400 text-sm line-through ml-2">{product.originalPrice}</span>
@@ -122,6 +165,77 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
             View All Products
           </a>
         </div>
+
+        {/* Product Details Modal - Version avec arrière-plan visible */}
+        {showDetailsModal && selectedProduct && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            {/* Fond semi-transparent très léger */}
+            <div 
+              className="absolute inset-0 bg-black bg-opacity-10 backdrop-blur-sm" 
+              onClick={closeDetailsModal}
+            ></div>
+            
+            {/* Contenu de la modal */}
+            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl relative z-10 m-4">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-2xl font-bold text-gray-800">{selectedProduct.title}</h3>
+                  <button 
+                    onClick={closeDetailsModal}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <FiX className="text-2xl" />
+                  </button>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
+                    <span className="text-gray-400">Product Image</span>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <span className="text-red-600 font-bold text-xl mr-3">{selectedProduct.salePrice}</span>
+                      <span className="text-gray-400 text-sm line-through">{selectedProduct.originalPrice}</span>
+                    </div>
+
+                    <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
+
+                    <ul className="mb-6 space-y-2">
+                      {selectedProduct.details.map((detail, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-green-500 mr-2">✓</span>
+                          <span className="text-gray-600">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex items-center w-full select-none">
+                      <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="18,0 0,24 18,48" fill="#0071CE" />
+                      </svg>
+                      <div className="flex-1 h-12 bg-[#0071CE] flex items-center justify-between transition-colors duration-300 font-semibold uppercase text-sm px-6 shadow-lg" style={{ minHeight: '48px' }}>
+                        <span className="text-white tracking-wide">ADD TO BASKET</span>
+                        <button 
+                          onClick={() => {
+                            addToCart(selectedProduct);
+                            closeDetailsModal();
+                          }} 
+                          className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-[#0071CE] ml-2 focus:outline-none"
+                        >
+                          <FiShoppingCart className="text-[#0071CE] text-xl" strokeWidth={2} />
+                        </button>
+                      </div>
+                      <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="0,0 18,24 0,48" fill="#0071CE" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
