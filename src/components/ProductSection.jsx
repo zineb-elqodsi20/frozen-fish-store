@@ -91,7 +91,29 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <p className="text-gray-600 italic mb-2">Products of high quality</p>
-          <h2 className="text-3xl font-bold text-blue-800">Our Featured Products</h2>
+      <div className="group cursor-default">
+        <h2 className="text-4xl font-bold text-sky-600 relative inline-block">
+          Frozen Fish, Seafood Delivered To Your Door
+          <span className="absolute bottom-0 left-0 h-0.5 bg-sky-400 w-0 group-hover:w-full transition-all duration-500"></span>
+        </h2>
+      </div>
+<div className="group cursor-default inline-block">
+  <h2 className="text-4xl font-bold text-green-500 relative">
+    5% Discount Off Your First Frozen Fish Order
+    <span className="absolute bottom-0 left-0 h-0.5 bg-green-400 w-0 group-hover:w-full transition-all duration-500"></span>
+  </h2>
+</div>
+     <p className="text-gray-600 italic mb-2">Quick access to our products
+              </p>
+        <div className="text-center mb-12">
+  <div className="relative inline-block pb-2 mb-4">
+    <p className="text-gray-600 font-light italic text-lg">
+      Marcine Fish Special Offers
+    </p>
+    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-green-500 rounded-full"></div>
+  </div>
+  
+</div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
