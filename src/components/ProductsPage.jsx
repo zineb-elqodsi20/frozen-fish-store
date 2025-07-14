@@ -40,7 +40,7 @@ const ProductsPage = ({ addToCart }) => {
 
   return (
     <div className="min-h-screen bg-blue-50 flex relative">
-      {/* Sidebar */}
+     
       <aside className="w-72 bg-white shadow-lg rounded-r-2xl p-6 flex flex-col gap-8 sticky top-8 h-fit mt-8 ml-4 animate-fadeInLeft">
         <div>
           <h2 className="text-lg font-bold mb-2 text-blue-800">Search</h2>
@@ -91,7 +91,7 @@ const ProductsPage = ({ addToCart }) => {
           </div>
         </div>
       </aside>
-      {/* Products Grid */}
+      
       <section className="flex-1 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fadeInScale">
         {filtered.length === 0 ? (
           <div className="col-span-full text-center text-gray-500 text-xl mt-16">No products found.</div>
@@ -101,7 +101,7 @@ const ProductsPage = ({ addToCart }) => {
               key={product.id} 
               className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group relative"
             >
-              {/* Wishlist and Quick View */}
+              
               <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                 <button className="bg-white p-2 rounded-full shadow-md hover:bg-blue-50">
                   <FiHeart className="text-gray-600 hover:text-red-500" />
@@ -110,11 +110,11 @@ const ProductsPage = ({ addToCart }) => {
                   <FiEye className="text-gray-600 hover:text-blue-600" />
                 </button>
               </div>
-              {/* Product Image Placeholder */}
+              
               <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                 <span className="text-gray-400">Product Image</span>
               </div>
-              {/* Product Info */}
+              
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800 mb-1">{product.name}</h3>
                 <p className="text-sm text-gray-500 mb-1">Sale Price</p>
@@ -122,9 +122,9 @@ const ProductsPage = ({ addToCart }) => {
                   <span className="text-red-600 font-bold text-xl">£{product.price}</span>
                   <span className="text-gray-400 text-sm line-through ml-2">£{product.originalPrice}</span>
                 </div>
-                {/* Add to Basket Button */}
+                
                 <div className="flex items-center w-full mt-4 select-none">
-                  {/* Left ribbon tail */}
+                  
                   <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <polygon points="18,0 0,24 18,48" fill="#0071CE" />
                   </svg>
@@ -138,7 +138,7 @@ const ProductsPage = ({ addToCart }) => {
                       <FiShoppingCart className="text-[#0071CE] text-xl" strokeWidth={2} />
                     </span>
                   </div>
-                  {/* Right ribbon tail */}
+                  
                   <svg width="18" height="48" viewBox="0 0 18 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <polygon points="0,0 18,24 0,48" fill="#0071CE" />
                   </svg>

@@ -188,16 +188,16 @@ const ProductCards = ({ addToCart, addToWishlist }) => {
           </a>
         </div>
 
-        {/* Product Details Modal - Version avec arrière-plan visible */}
+        
         {showDetailsModal && selectedProduct && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            {/* Fond semi-transparent très léger */}
+           
             <div 
               className="absolute inset-0 bg-black bg-opacity-10 backdrop-blur-sm" 
               onClick={closeDetailsModal}
             ></div>
             
-            {/* Contenu de la modal */}
+            
             <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl relative z-10 m-4">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">

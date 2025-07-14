@@ -1,14 +1,16 @@
 import './App.css';
-import Chatbot from './components/Chatbot';
-import MarcineFishNavbar from './components/navbar';
-import ImageSlider from "./components/ImageSlider";
-import ProductCards from './components/ProductSection';
-import AboutUs from './components/AboutUs';
-import Footer from './components/Footer';
-import ProductsPage from './components/ProductsPage';
 import { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { FiCheckCircle, FiTrash2 } from 'react-icons/fi';
+
+import MarcineFishNavbar from './components/navbar';
+import ImageSlider from './components/ImageSlider';
+import ProductCards from './components/ProductSection';
+import AboutUs from './components/AboutUs';
+import ProductsPage from './components/ProductsPage';
+import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
+import Testimonials from './components/Testimonials';
 
 function getCartFromStorage() {
   try {
@@ -17,6 +19,7 @@ function getCartFromStorage() {
     return [];
   }
 }
+
 function saveCartToStorage(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -30,7 +33,6 @@ function App() {
   const [toast, setToast] = useState(null);
   const [cartProducts, setCartProducts] = useState(getCartFromStorage());
 
-  // Sync cart count and products with localStorage
   const updateCart = useCallback(() => {
     const cart = getCartFromStorage();
     setCartProducts(cart);
@@ -63,42 +65,48 @@ function App() {
   };
 
   const addToWishlist = () => setWishlistCount(w => w + 1);
-
   const openLogin = () => setShowLogin(true);
   const openRegister = () => setShowRegister(true);
   const closeModals = () => { setShowLogin(false); setShowRegister(false); };
-
   const openCartSidebar = () => setShowCartSidebar(true);
   const closeCartSidebar = () => setShowCartSidebar(false);
-
-  // Calculate total
   const cartTotal = cartProducts.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
     <Router>
       <div className="App">
-        {/* Toast */}
         {toast && (
           <div className="fixed top-6 left-1/2 -translate-x-1/2 bg-green-50 text-green-900 px-6 py-3 rounded-lg shadow-lg z-50 flex items-center animate-fadeInScale border border-green-200">
             {toast.icon}
             <span className="font-semibold">{toast.message}</span>
           </div>
         )}
+
         <MarcineFishNavbar 
           cartCount={cartCount}
           wishlistCount={wishlistCount}
           onSignIn={openLogin}
           onCartClick={openCartSidebar}
         />
+
         <main>
           <Routes>
-            <Route path="/" element={<><ImageSlider /><ProductCards addToCart={() => {}} addToWishlist={addToWishlist} /></>} />
+            <Route path="/" element={
+              <>
+                <ImageSlider />
+                <ProductCards addToCart={addToCart} addToWishlist={addToWishlist} />
+                <Testimonials />
+              </>
+            } />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/products" element={<ProductsPage addToCart={addToCart} />} />
           </Routes>
         </main>
+
         <Footer />
-        {/* Cart Sidebar */}
+        <Chatbot />
+
+    
         {showCartSidebar && (
           <>
             <div className="fixed inset-0 bg-black/20 z-50" onClick={closeCartSidebar}></div>
@@ -127,7 +135,6 @@ function App() {
                   ))
                 )}
               </div>
-              {/* Cart Total and Checkout */}
               <div className="p-5 border-t bg-blue-50 rounded-b-2xl">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-semibold text-blue-900 text-lg">Total:</span>
@@ -138,35 +145,36 @@ function App() {
             </aside>
           </>
         )}
-        {/* Login Modal */}
+
+       
         {showLogin && (
           <div className="fixed inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
             <div className="bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 w-full max-w-sm relative animate-fadeInScale">
-              <button className="absolute top-2 right-2 text-gray-400 hover:text-blue-600 text-2xl transition-colors" onClick={closeModals} aria-label="Close">&times;</button>
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-blue-600 text-2xl" onClick={closeModals}>&times;</button>
               <h2 className="text-2xl font-bold mb-4 text-blue-700">Sign In</h2>
-              <input className="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-200" placeholder="Email" />
-              <input className="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-200" placeholder="Password" type="password" />
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold shadow mb-2 transition-colors">Sign In</button>
+              <input className="w-full mb-3 p-2 border rounded" placeholder="Email" />
+              <input className="w-full mb-3 p-2 border rounded" placeholder="Password" type="password" />
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold shadow mb-2">Sign In</button>
               <p className="text-sm text-center">Don't have an account? <button className="text-blue-600 underline" onClick={() => { setShowLogin(false); setShowRegister(true); }}>Register</button></p>
             </div>
           </div>
         )}
-        {/* Register Modal */}
+
+       
         {showRegister && (
           <div className="fixed inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
             <div className="bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 w-full max-w-sm relative animate-fadeInScale">
-              <button className="absolute top-2 right-2 text-gray-400 hover:text-blue-600 text-2xl transition-colors" onClick={closeModals} aria-label="Close">&times;</button>
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-blue-600 text-2xl" onClick={closeModals}>&times;</button>
               <h2 className="text-2xl font-bold mb-4 text-blue-700">Register</h2>
-              <input className="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-200" placeholder="Email" />
-              <input className="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-200" placeholder="Password" type="password" />
-              <input className="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-200" placeholder="Confirm Password" type="password" />
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold shadow mb-2 transition-colors">Register</button>
+              <input className="w-full mb-3 p-2 border rounded" placeholder="Email" />
+              <input className="w-full mb-3 p-2 border rounded" placeholder="Password" type="password" />
+              <input className="w-full mb-3 p-2 border rounded" placeholder="Confirm Password" type="password" />
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold shadow mb-2">Register</button>
               <p className="text-sm text-center">Already have an account? <button className="text-blue-600 underline" onClick={() => { setShowRegister(false); setShowLogin(true); }}>Sign In</button></p>
             </div>
           </div>
         )}
       </div>
-      <Chatbot />
     </Router>
   );
 }

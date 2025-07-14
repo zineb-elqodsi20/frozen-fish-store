@@ -20,7 +20,7 @@ export default function ImageSlider() {
 
   return (
     <div className="relative w-full" style={{ height: "80vh" }}>
-      {/* Slides */}
+     
       <div className="relative w-full h-full overflow-hidden">
         {images.map((image, index) => (
           <div
@@ -35,7 +35,6 @@ export default function ImageSlider() {
               className="w-full h-full object-cover"
             />
             
-            {/* Overlay text */}
             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
               <div className="text-center text-white px-4 max-w-2xl">
                 <p className="text-lg md:text-xl mb-2 italic">
@@ -53,7 +52,7 @@ export default function ImageSlider() {
         ))}
       </div>
 
-      {/* Indicators only */}
+     
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {images.map((_, index) => (
           <button
